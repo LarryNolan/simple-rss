@@ -31,9 +31,9 @@ class SimpleRSS
       :'trackback:ping', :'trackback:about',
       :'dc:creator', :'dc:title', :'dc:subject', :'dc:rights', :'dc:publisher',
       :'feedburner:origLink',
-      :'media:content#url','media:player#url', :'media:content#type', :'media:content#height', :'media:content#width',:'media:content#duration','media:content#lang',
+      :'media:content#url','media:player#url', :'media:content#type', :'media:content#height', :'media:content#width',:'media:content#duration',:'media:content#lang',
       :'media:title', :'media:thumbnail#url', :'media:thumbnail#height', :'media:thumbnail#width',
-      :'media:credit', :'media:credit#role','media:copyright',
+      :'media:credit', :'media:credit#role',:'media:copyright',
       :'media:category', :'media:category#scheme'
   ]
 
