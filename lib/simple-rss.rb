@@ -90,6 +90,7 @@ class SimpleRSS
 
       if $2 || $3
         tag_cleaned = clean_tag(tag)
+        #puts "Heyo: #{tag_cleaned}"
         instance_variable_set("@#{ tag_cleaned }", clean_content(tag, $2, $3))
         self.class.send(:attr_reader, tag_cleaned)
       end
@@ -109,7 +110,9 @@ class SimpleRSS
           elsif match[3] =~ %r{<(rss:|atom:)?#{tag}(.*?)rel=['"]#{rel}['"](.*?)/\s*>}mi
             nil
           end
-          item[clean_tag("#{tag}+#{rel}")] = clean_content(tag, $3, $4) if $3 || $4
+          blah = clean_plus_tag("#{tag}+#{rel}")
+          #puts "blah: #{blah}"
+          item[blah] = clean_content(tag, $3, $4) if $3 || $4
         elsif tag.to_s.include?("#")
           tag_data = tag.to_s.split("#")
           tag = tag_data[0]
@@ -119,14 +122,18 @@ class SimpleRSS
           elsif match[3] =~ %r{<(rss:|atom:)?#{tag}(.*?)#{attrib}=['"](.*?)['"](.*?)/\s*>}mi
             nil
           end
-          item[clean_tag("#{tag}_#{attrib}")] = clean_content(tag, attrib, $3) if $3
+          bleep = clean_tag("#{tag}_#{attrib}")
+          #puts "bleep: #{bleep}"
+          item[bleep] = clean_content(tag, attrib, $3) if $3
         else
           if match[3] =~ %r{<(rss:|atom:)?#{tag}(.*?)>(.*?)</(rss:|atom:)?#{tag}>}mi
             nil
           elsif match[3] =~ %r{<(rss:|atom:)?#{tag}(.*?)/\s*>}mi
             nil
           end
-          item[clean_tag(tag)] = clean_content(tag, $2, $3) if $2 || $3
+          bloo = clean_tag(tag)
+          #puts "bloo: #{bloo}"
+          item[bloo] = clean_content(tag, $2, $3) if $2 || $3
         end
       end
       def item.method_missing(name, *args) self[name] end
@@ -147,7 +154,17 @@ class SimpleRSS
     end
   end
 
+  def clean_colon_tag(tag)
+    tag.to_s.gsub(':','_').intern
+  end
+
+  def clean_plus_tag(tag)
+    # puts tag
+    tag.to_s.gsub('+','_').intern
+  end
+
   def clean_tag(tag)
+    # puts tag
     tag.to_s.gsub(':','_').intern
   end
 
